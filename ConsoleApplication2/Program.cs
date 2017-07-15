@@ -15,7 +15,7 @@ namespace ConsoleApplication2
     {
         static void Main(string[] args)
         {
-            string url = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=4F2843911926206BC2AC0F3A84B72261&steamid=76561198025052160&include_appinfo=1&format=json";
+            string url = "";
             var request = WebRequest.Create(url);
             string text;
             Response steamGames;
