@@ -15,7 +15,7 @@ namespace ConsoleApplication2
     {
         static void Main(string[] args)
         {
-            string url = "";
+            string url = ""; //insert steam api URL here
             var request = WebRequest.Create(url);
             string text;
             Response steamGames;
