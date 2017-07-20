@@ -15,22 +15,37 @@ namespace ConsoleApplication2
     {
         static void Main(string[] args)
         {
-            string url = ""; //insert steam api URL here
+            string url = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=3B07BB25C9ED221917308FF0BB7139CD&steamid=76561198025052160&include_appinfo=1&format=json"; //insert steam api URL here
             var request = WebRequest.Create(url);
             string text;
-            Response steamGames;
             var response = (HttpWebResponse)request.GetResponse();
 
             using (var sr = new StreamReader(response.GetResponseStream()))
             {
-
-                JavaScriptSerializer js = new JavaScriptSerializer();
-                steamGames = js.Deserialize<Response>(sr.ReadToEnd());
-
+                text = sr.ReadToEnd();
             }
-            Game[] krisGames = steamGames.games.ToArray();
-            Console.WriteLine(krisGames[1]);
+
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Rootobject root = new Rootobject();
+            root.response = js.Deserialize<Response>(text);
+
+            Console.WriteLine(root.response.game_count);
+
         }
+    }
+
+
+
+    public class Rootobject
+    {
+        public Response response { get; set; }
+    }
+
+    public class Response
+    {
+        public int game_count { get; set; }
+        public Game[] games { get; set; }
     }
 
     public class Game
@@ -41,16 +56,10 @@ namespace ConsoleApplication2
         public string img_icon_url { get; set; }
         public string img_logo_url { get; set; }
         public bool has_community_visible_stats { get; set; }
+        public int playtime_2weeks { get; set; }
     }
 
-    public class Response
-    {
-        public int game_count { get; set; }
-        public List<Game> games { get; set; }
-    }
 
-    public class RootObject
-    {
-        public Response response { get; set; }
-    }
+
+
 }
